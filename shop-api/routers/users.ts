@@ -1,7 +1,6 @@
 import express from "express";
 import {Error} from "mongoose";
 import User from "../models/User";
-import bcrypt from "bcrypt";
 
 const userRouter = express.Router();
 
@@ -32,7 +31,7 @@ userRouter.post('/sessions', async (req, res, next) => {
             return;
         }
 
-        const isMatch = await bcrypt.compare(req.body.password, user.password);
+        const isMatch = await user.checkPassword(req.body.password);
 
         if (!isMatch) {
             res.status(400).send({error: 'Password is wrong'});

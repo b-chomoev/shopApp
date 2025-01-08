@@ -1,10 +1,17 @@
-import mongoose from "mongoose";
+import mongoose, {Model} from "mongoose";
 import bcrypt from "bcrypt";
+import {UserFields} from "../types";
+
+interface UserMethods {
+    checkPassword(password: string): Promise<boolean>;
+}
+
+type UserModel = Model<UserFields, {}, UserMethods>;
 
 const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 
-const UserSchema = new Schema({
+const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
     username: {
         type: String,
         required: true,
@@ -37,6 +44,6 @@ UserSchema.set('toJSON', {
     }
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model<UserFields, UserModel>('User', UserSchema);
 
 export default User;
