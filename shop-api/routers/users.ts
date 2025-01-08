@@ -51,4 +51,22 @@ userRouter.post('/sessions', async (req, res, next) => {
     }
 });
 
+userRouter.post('/secret', async (req, res, next) => {
+    const token = req.get('Authorization');
+
+    if (!token) {
+        res.status(401).send({error: 'No token presented'});
+        return;
+    }
+
+    const user = await User.findOne({token: token});
+
+    if (!user) {
+        res.status(401).send({error: 'Wrong token'});
+        return;
+    }
+
+    res.send({message: 'Secret message from server', username: user.username, id_user: user._id});
+});
+
 export default userRouter;
