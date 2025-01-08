@@ -1,9 +1,11 @@
 import mongoose, {Model} from "mongoose";
 import bcrypt from "bcrypt";
 import {UserFields} from "../types";
+import {randomUUID} from "node:crypto";
 
 interface UserMethods {
     checkPassword(password: string): Promise<boolean>;
+    generateToken(): void;
 }
 
 type UserModel = Model<UserFields, {}, UserMethods>;
@@ -18,6 +20,10 @@ const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
         unique: true,
     },
     password: {
+        type: String,
+        required: true,
+    },
+    token: {
         type: String,
         required: true,
     }
@@ -36,6 +42,10 @@ UserSchema.pre('save', async function (next) {
 UserSchema.methods.checkPassword = function (password: string) {
     return bcrypt.compare(password, this.password);
 }
+
+UserSchema.methods.generateToken = function () {
+    this.token = randomUUID();
+};
 
 UserSchema.set('toJSON', {
     transform: (doc, ret, options) => {
