@@ -26,12 +26,16 @@ UserSchema.pre('save', async function (next) {
     next();
 });
 
+UserSchema.methods.checkPassword = function (password: string) {
+    return bcrypt.compare(password, this.password);
+}
+
 UserSchema.set('toJSON', {
     transform: (doc, ret, options) => {
         delete ret.password;
         return;
     }
-})
+});
 
 const User = mongoose.model('User', UserSchema);
 
