@@ -6,6 +6,7 @@ import fs = require("fs");
 import categoriesRouter from "./routers/categories";
 import mongoDb from "./mongoDb";
 import * as mongoose from "mongoose";
+import userRouter from "./routers/users";
 
 const app = express();
 const port = 8000;
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
+app.use('/users', userRouter);
 
 const run = async () => {
     await mongoose.connect('mongodb://localhost/shop');
