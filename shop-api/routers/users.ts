@@ -1,6 +1,8 @@
 import express from "express";
 import {Error} from "mongoose";
 import User from "../models/User";
+import user from "../models/User";
+import auth, {RequestWithUser} from "../middleware/auth";
 
 const userRouter = express.Router();
 
@@ -52,22 +54,11 @@ userRouter.post('/sessions', async (req, res, next) => {
     }
 });
 
-userRouter.post('/secret', async (req, res, next) => {
-    const token = req.get('Authorization');
+userRouter.post('/secret', auth, async (req, res, next) => {
+    let expressReq = req as RequestWithUser;
+    const user = expressReq.user;
 
-    if (!token) {
-        res.status(401).send({error: 'No token presented'});
-        return;
-    }
-
-    const user = await User.findOne({token: token});
-
-    if (!user) {
-        res.status(401).send({error: 'Wrong token'});
-        return;
-    }
-
-    res.send({message: 'Secret message from server', username: user.username, id_user: user._id});
+    res.send({message: 'Secret message from server', user: user});
 });
 
 export default userRouter;
