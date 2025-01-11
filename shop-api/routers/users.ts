@@ -42,6 +42,7 @@ userRouter.post('/sessions', async (req, res, next) => {
         user.generateToken();
         await user.save();
         res.send({message: 'Username and password are correct', user});
+        return;
     } catch (error) {
         if (error instanceof Error.ValidationError) {
             res.status(400).send(error);
