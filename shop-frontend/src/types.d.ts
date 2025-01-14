@@ -31,3 +31,8 @@ export interface User {
   username: string;
   token: string;
 }
+
+export interface RegisterResponse {
+  user: User;
+  message: string;
+}
