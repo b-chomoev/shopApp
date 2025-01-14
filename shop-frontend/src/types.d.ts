@@ -20,3 +20,8 @@ export interface Category {
   title: string;
   description: string;
 }
+
+export interface RegisterMutation {
+  username: string;
+  password: string;
+}
