@@ -1,6 +1,7 @@
 import { User } from '../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store.ts';
+import { register } from './usersThunks.ts';
 
 interface UsersState {
   user: User | null;
@@ -22,6 +23,21 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state) => {
+        state.registerLoading = true;
+        state.registerError = false;
+      })
+      .addCase(register.fulfilled, (state, {payload: registerResponse}) => {
+        state.registerLoading = false;
+        state.user = registerResponse.user;
+      })
+      .addCase(register.rejected, (state) => {
+        state.registerLoading = false;
+        state.registerError = true;
+      });
+  }
 });
 
 export const usersReducer = usersSlice.reducer;
