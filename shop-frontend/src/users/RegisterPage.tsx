@@ -9,8 +9,15 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
+import { selectRegisterError } from './usersSlice.ts';
+import { useNavigate } from 'react-router-dom';
+import { register } from './usersThunks.ts';
 
 const RegisterPage = () => {
+  const dispatch = useAppDispatch();
+  const registerError = useAppSelector(selectRegisterError);
+  const navigate = useNavigate();
   const [form, setForm] = useState<RegisterMutation>({
     username: '',
     password: '',
@@ -28,7 +35,12 @@ const RegisterPage = () => {
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log({...form});
+    try {
+      await dispatch(register(form)).unwrap();
+
+    } catch (e) {
+      //error
+    }
   };
 
   return (
