@@ -37,9 +37,17 @@ const RegisterPage = () => {
 
     try {
       await dispatch(register(form)).unwrap();
-
+      navigate('/');
     } catch (e) {
-      //error
+      console.error('Failed to register:', e);
+    }
+  };
+
+  const getFieldError = (fieldName: string) => {
+    try {
+      return registerError?.errors[fieldName].message;
+    } catch (e) {
+      return undefined;
     }
   };
 
@@ -69,6 +77,8 @@ const RegisterPage = () => {
                 name="username"
                 value={form.username}
                 onChange={inputChangeHandler}
+                error={Boolean(getFieldError('username'))}
+                helperText={getFieldError('username')}
               />
             </Grid>
             <Grid size={12}>
@@ -79,7 +89,10 @@ const RegisterPage = () => {
                 type="password"
                 id="password"
                 value={form.password}
-                onChange={inputChangeHandler}              />
+                onChange={inputChangeHandler}
+                error={Boolean(getFieldError('password'))}
+                helperText={getFieldError('password')}
+              />
             </Grid>
           </Grid>
           <Button

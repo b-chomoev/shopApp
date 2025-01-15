@@ -1,4 +1,4 @@
-import { User } from '../types';
+import { User, ValidationError } from '../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store.ts';
 import { register } from './usersThunks.ts';
@@ -6,13 +6,13 @@ import { register } from './usersThunks.ts';
 interface UsersState {
   user: User | null;
   registerLoading: boolean;
-  registerError: boolean;
+  registerError: ValidationError | null;
 }
 
 const initialState: UsersState = {
   user: null,
   registerLoading: false,
-  registerError: false,
+  registerError: null,
 };
 
 export const selectUser = (state: RootState) => state.users.user;
@@ -27,15 +27,15 @@ export const usersSlice = createSlice({
     builder
       .addCase(register.pending, (state) => {
         state.registerLoading = true;
-        state.registerError = false;
+        state.registerError = null;
       })
       .addCase(register.fulfilled, (state, {payload: registerResponse}) => {
         state.registerLoading = false;
         state.user = registerResponse.user;
       })
-      .addCase(register.rejected, (state) => {
+      .addCase(register.rejected, (state, {payload: error}) => {
         state.registerLoading = false;
-        state.registerError = true;
+        state.registerError = error || null;
       });
   }
 });
