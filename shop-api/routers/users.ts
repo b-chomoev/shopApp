@@ -57,6 +57,22 @@ userRouter.post('/sessions', async (req, res, next) => {
     }
 });
 
+userRouter.delete('/sessions', auth, async (req, res, next) => {
+    let expressReq = req as RequestWithUser;
+    const userFromAuth = expressReq.user;
+
+    try{
+        const user = await User.findOne({_id: userFromAuth._id});
+        if (user) {
+            user.generateToken();
+            await user.save();
+            res.send({message: 'Success Log Out'});
+        }
+    } catch (error) {
+        next(error);
+    }
+});
+
 userRouter.post('/secret', auth, async (req, res, next) => {
     let expressReq = req as RequestWithUser;
 
