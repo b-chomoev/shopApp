@@ -35,6 +35,7 @@ export const productsSlice = createSlice({
       .addCase(fetchProducts.rejected, (state) => {
         state.fetchLoading = false;
       })
+
       .addCase(createProduct.pending, (state) => {
         state.createLoading = true;
       })
