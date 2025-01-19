@@ -3,6 +3,7 @@ import { Link as NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../../app/hooks';
 import { selectUser } from '../../../users/usersSlice.ts';
 import AnonymousMenu from './AnonymousMenu.tsx';
+import UserMenu from './UserMenu.tsx';
 
 const Link = styled(NavLink)({
   color: 'inherit',
@@ -23,11 +24,12 @@ const AppToolbar = () => {
         </Typography>
 
         {user ?
-          // show menu
-          <></>
+          <>
+            <UserMenu user={user}/>
+          </>
           :
           <>
-            <AnonymousMenu  />
+            <AnonymousMenu/>
           </>
         }
       </Toolbar>
