@@ -1,8 +1,6 @@
 import express from "express";
 import productsRouter from "./routers/products";
-import fileDb from "./fileDb";
 import cors from "cors";
-import fs = require("fs");
 import categoriesRouter from "./routers/categories";
 import mongoDb from "./mongoDb";
 import * as mongoose from "mongoose";
@@ -22,12 +20,6 @@ app.use('/users', userRouter);
 
 const run = async () => {
     await mongoose.connect(config.db);
-
-    if (fs.existsSync('./db.json')) {
-        await fileDb.init();
-    } else {
-        fs.writeFileSync('./db.json', JSON.stringify([]));
-    }
 
     app.listen(port, () => {
         console.log(`Server started on port http://localhost:${port}`);

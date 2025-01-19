@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 
 const CategorySchema = new mongoose.Schema({
@@ -9,9 +10,8 @@ const CategorySchema = new mongoose.Schema({
     description: {
         type: String,
         default: null,
-    }
+    },
 });
 
 const Category = mongoose.model('Category', CategorySchema);
-
 export default Category;

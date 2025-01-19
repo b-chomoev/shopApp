@@ -1,15 +1,14 @@
 import mongoose, {Model} from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 import {UserFields} from "../types";
 import {randomUUID} from "node:crypto";
 
 interface UserMethods {
     checkPassword(password: string): Promise<boolean>;
-
     generateToken(): void;
 }
 
-type UserModel = Model<UserFields, {}, UserMethods>;
+type UserModel = Model<UserFields, {}, UserMethods>
 
 const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
@@ -24,16 +23,16 @@ const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
                 const user: UserFields | null = await User.findOne({username: value});
                 return !user;
             },
-            message: 'This username is already taken',
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        token: {
-            type: String,
-            required: true,
+            message: "This username is already taken",
         }
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    token: {
+        type: String,
+        required: true,
     }
 });
 
@@ -53,15 +52,16 @@ UserSchema.methods.checkPassword = function (password: string) {
 
 UserSchema.methods.generateToken = function () {
     this.token = randomUUID();
-};
+}
 
 UserSchema.set('toJSON', {
     transform: (doc, ret, options) => {
         delete ret.password;
-        return;
+        return ret;
     }
 });
 
-const User = mongoose.model<UserFields, UserModel>('User', UserSchema);
+
+const User = mongoose.model('User', UserSchema);
 
 export default User;
