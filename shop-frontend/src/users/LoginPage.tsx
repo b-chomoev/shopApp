@@ -9,13 +9,14 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
-import { selectRegisterError } from './usersSlice.ts';
+import { selectLoginError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { register } from './usersThunks.ts';
+import { login } from './usersThunks.ts';
+import Alert from '@mui/material/Alert';
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
-  const registerError = useAppSelector(selectRegisterError);
+  const loginError = useAppSelector(selectLoginError);
   const navigate = useNavigate();
   const [form, setForm] = useState<RegisterMutation>({
     username: '',
@@ -34,20 +35,8 @@ const RegisterPage = () => {
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      await dispatch(register(form)).unwrap();
-      navigate('/');
-    } catch (e) {
-      console.error('Failed to register:', e);
-    }
-  };
-
-  const getFieldError = (fieldName: string) => {
-    try {
-      return registerError?.errors[fieldName].message;
-    } catch (e) {
-      return undefined;
-    }
+    await dispatch(login(form)).unwrap();
+    navigate('/');
   };
 
   return (
@@ -66,6 +55,13 @@ const RegisterPage = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+
+        {loginError && (
+          <Alert severity="error" sx={{mt: 3, width: '100%'}}>
+            {loginError.error}
+          </Alert>
+        )}
+
         <Box component="form" noValidate onSubmit={submitHandler} sx={{ mt: 3 }}>
           <Grid container direction={'column'} size={12} spacing={2}>
             <Grid size={12}>
@@ -76,8 +72,6 @@ const RegisterPage = () => {
                 name="username"
                 value={form.username}
                 onChange={inputChangeHandler}
-                error={Boolean(getFieldError('username'))}
-                helperText={getFieldError('username')}
               />
             </Grid>
             <Grid size={12}>
@@ -89,8 +83,6 @@ const RegisterPage = () => {
                 id="password"
                 value={form.password}
                 onChange={inputChangeHandler}
-                error={Boolean(getFieldError('password'))}
-                helperText={getFieldError('password')}
               />
             </Grid>
           </Grid>

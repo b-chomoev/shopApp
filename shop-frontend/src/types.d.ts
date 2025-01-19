@@ -53,3 +53,7 @@ export interface ValidationError {
   name: string;
   _message: string;
 }
+
+export interface GlobalError {
+  error: string;
+}
