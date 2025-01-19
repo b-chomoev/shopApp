@@ -13,8 +13,8 @@ userRouter.post('/register', async (req, res, next) => {
         });
 
         user.generateToken();
-
         await user.save();
+
         res.send({user, message: "Register success"});
     } catch (error) {
         if (error instanceof Error.ValidationError) {
