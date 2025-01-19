@@ -18,6 +18,7 @@ const AppToolbar = () => {
         </Typography>
 
         <Button color="inherit" component={NavLink} to="/register">Sign Up</Button>
+        <Button color="inherit" component={NavLink} to="/login">Sign In</Button>
       </Toolbar>
     </AppBar>
   );

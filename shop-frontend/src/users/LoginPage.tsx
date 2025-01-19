@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
@@ -61,10 +61,10 @@ const RegisterPage = () => {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
+          <LockOpenIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign in
         </Typography>
         <Box component="form" noValidate onSubmit={submitHandler} sx={{ mt: 3 }}>
           <Grid container direction={'column'} size={12} spacing={2}>
@@ -100,12 +100,12 @@ const RegisterPage = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Sign in
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid size={12}>
-              <NavLink to={'/login'}>
-                Already have an account? Sign in
+              <NavLink to={'/register'}>
+                Doesn't have an account yet? Sign up
               </NavLink>
             </Grid>
           </Grid>
