@@ -23,15 +23,15 @@ const AppToolbar = () => {
           <Link to="/">CompStore</Link>
         </Typography>
 
-        {user ?
-          <>
-            <UserMenu user={user}/>
-          </>
-          :
-          <>
-            <AnonymousMenu/>
-          </>
-        }
+          {user ?
+            <>
+              <UserMenu user={user}/>
+            </>
+            :
+            <>
+              <AnonymousMenu/>
+            </>
+          }
       </Toolbar>
     </AppBar>
   );
