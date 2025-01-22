@@ -13,14 +13,16 @@ import { selectRegisterError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { register } from './usersThunks.ts';
 
+const initialForm: RegisterMutation = {
+  username: '',
+  password: '',
+};
+
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const registerError = useAppSelector(selectRegisterError);
   const navigate = useNavigate();
-  const [form, setForm] = useState<RegisterMutation>({
-    username: '',
-    password: '',
-  });
+  const [form, setForm] = useState<RegisterMutation>(initialForm);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
