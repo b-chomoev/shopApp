@@ -37,14 +37,16 @@ const run = async () => {
         image: 'fixtures/ssd.png',
     });
 
-    const [userJohn, userJane] = await User.create({
+    await User.create({
         username: 'John',
         password: '123',
         token: randomUUID(),
+        role: 'user',
     }, {
         username: 'Jane',
         password: '123',
         token: randomUUID(),
+        role: 'admin',
     });
 
     await db.close();
