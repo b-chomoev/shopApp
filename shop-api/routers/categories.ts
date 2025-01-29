@@ -6,7 +6,7 @@ import permit from "../middleware/permit";
 
 const categoriesRouter = express.Router();
 
-categoriesRouter.get('/', auth, permit('admin'), async (req, res, next) => {
+categoriesRouter.get('/', async (req, res, next) => {
     try {
         const categories = await Category.find();
         res.send(categories);
