@@ -6,11 +6,13 @@ import { useEffect } from 'react';
 import { fetchProducts } from '../productsThunk.ts';
 import { selectFetchLoading, selectProductsItems } from '../productsSlice.ts';
 import ProductItem from '../components/ProductItem.tsx';
+import { selectUser } from '../../../users/usersSlice.ts';
 
 const Products = () => {
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectProductsItems);
   const isFetchProductsLoading = useAppSelector(selectFetchLoading);
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -24,9 +26,11 @@ const Products = () => {
         </Grid>
 
         <Grid>
-          <Button color="primary" component={Link} to="/products/new">
-            Add product
-          </Button>
+          {user && user.role === 'admin' && (
+            <Button color="primary" component={Link} to="/products/new">
+              Add product
+            </Button>
+          )}
         </Grid>
       </Grid>
 
