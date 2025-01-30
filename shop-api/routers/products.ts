@@ -35,7 +35,6 @@ productsRouter.get('/:id', async (req, res, next) => {
     }
 });
 
-
 productsRouter.post('/', imagesUpload.single('image'), auth, permit('admin'), async (req, res, next) => {
 
     if (req.body.category) {
@@ -43,16 +42,14 @@ productsRouter.post('/', imagesUpload.single('image'), auth, permit('admin'), as
         if (!category) res.status(404).send('Not Found category');
     }
 
-    const newProduct: ProductWithoutId = {
-        category: req.body.category,
-        title: req.body.title,
-        description: req.body.description,
-        price: req.body.price,
-        image: req.file ? 'images' + req.file.filename : null,
-    };
-
     try {
-        const product = new Product(newProduct);
+        const product: ProductWithoutId = new Product({
+            category: req.body.category,
+            title: req.body.title,
+            description: req.body.description,
+            price: req.body.price,
+            image: req.file ? 'images' + req.file.filename : null,
+        });
         await product.save();
         res.send(product);
     } catch (e) {
