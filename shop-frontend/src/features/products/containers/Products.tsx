@@ -34,6 +34,7 @@ const Products = () => {
                     key={product._id}
                     id={product._id}
                     title={product.title}
+                    description={product.description}
                     price={product.price}
                     image={product.image}
                     category={product.category}

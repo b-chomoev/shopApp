@@ -11,11 +11,12 @@ interface Props {
   title: string;
   price: number;
   id: string;
+  description: string;
   image?: string | null | undefined;
   category: Category;
 }
 
-const ProductItem: React.FC<Props> = ({title, price, id, image, category}) => {
+const ProductItem: React.FC<Props> = ({title, price, id, image, category, description}) => {
   let productImage = noPicture;
 
   if (image) {
@@ -30,6 +31,7 @@ const ProductItem: React.FC<Props> = ({title, price, id, image, category}) => {
         <CardContent>
           <p>{category.title}</p>
           <strong>Price: {price} KGS</strong>
+          <p dangerouslySetInnerHTML={{__html: description}}/>
         </CardContent>
         <CardActions>
           <IconButton component={Link} to={'/products/' + id}>

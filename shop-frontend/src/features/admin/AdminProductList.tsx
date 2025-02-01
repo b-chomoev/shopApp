@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
@@ -8,6 +8,8 @@ import { fetchAdminProducts } from './productsAdminThunk.ts';
 import { selectAdminProductsItems } from './productsAdminSlice.ts';
 import { Product } from '../../types';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
 
 const AdminProductList = () => {
   const user = useAppSelector(selectUser);
@@ -19,7 +21,7 @@ const AdminProductList = () => {
   }, [dispatch]);
 
   const columns: GridColDef<Product>[] = [
-    { field: '_id', headerName: 'ID', width: 90 },
+    {field: '_id', headerName: 'ID', width: 90},
     {
       field: 'category',
       headerName: 'Category',
@@ -41,6 +43,25 @@ const AdminProductList = () => {
       headerName: 'Price',
       width: 150,
       sortable: true,
+    },
+    {
+      field: 'actions',
+      headerName: '',
+      editable: false,
+      sortable: false,
+      filterable: false,
+      width: 100,
+      renderCell: () => (
+        <>
+          <IconButton>
+            <ClearIcon />
+          </IconButton>
+
+          <IconButton>
+            <EditIcon />
+          </IconButton>
+        </>
+      )
     },
   ];
 
