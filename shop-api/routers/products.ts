@@ -50,6 +50,7 @@ productsRouter.post('/', imagesUpload.single('image'), auth, permit('admin'), as
             price: req.body.price,
             image: req.file ? 'images' + req.file.filename : null,
         });
+
         await product.save();
         res.send(product);
     } catch (e) {
