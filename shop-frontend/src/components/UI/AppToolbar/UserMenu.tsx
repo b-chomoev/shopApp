@@ -1,8 +1,8 @@
 import { Button, Menu, MenuItem } from '@mui/material';
 import { User } from '../../../types';
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../../app/hooks.ts';
-import { unsetUser } from '../../../features/users/usersSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
+import { selectUser, unsetUser } from '../../../features/users/usersSlice.ts';
 import { logout } from '../../../features/users/usersThunks.ts';
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 
 const UserMenu: React.FC<Props> = ({user}) => {
   const dispatch = useAppDispatch();
+  const userAdmin = useAppSelector(selectUser);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,8 +33,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
         Hello, {user.username}
       </Button>
       <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My Account</MenuItem>
+        {userAdmin && userAdmin.role === 'admin' && <MenuItem>Admin</MenuItem>}
         <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
       </Menu>
     </>

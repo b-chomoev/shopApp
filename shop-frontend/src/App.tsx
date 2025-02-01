@@ -10,6 +10,7 @@ import { useAppSelector } from './app/hooks.ts';
 import { selectUser } from './features/users/usersSlice.ts';
 import AdminLayout from './features/admin/AdminLayout.tsx';
 import AdminProductList from './features/admin/AdminProductList.tsx';
+import AdminCategoriesList from './features/admin/AdminCategoriesList.tsx';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -40,6 +41,7 @@ const App = () => {
             }>
               <Route path='' element={<AdminProductList />} />
               <Route path='products' element={<AdminProductList />} />
+              <Route path='categories' element={<AdminCategoriesList />} />
             </Route>
             <Route path="*" element={(<h1>Not found</h1>)}/>
           </Routes>
