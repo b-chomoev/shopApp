@@ -1,20 +1,20 @@
-import ProductForm from '../components/ProductForm.tsx';
-import { ProductMutation } from '../../../types';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import { createProduct } from '../productsThunk.ts';
+import ProductForm from './ProductForm.tsx';
+import { ProductMutation } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
-import { selectCreateLoading } from '../productsSlice.ts';
+import { createAdminProduct } from './productsAdminThunk.ts';
+import { selectAdminCreateLoading } from './productsAdminSlice.ts';
 
 const NewProduct = () => {
   const dispatch = useAppDispatch();
-  const isCreateLoading = useAppSelector(selectCreateLoading);
+  const isCreateLoading = useAppSelector(selectAdminCreateLoading);
   const navigate = useNavigate();
 
   const onSubmitForm = async (product: ProductMutation) => {
     try {
-      await dispatch(createProduct(product)).unwrap();
+      await dispatch(createAdminProduct(product)).unwrap();
       toast.success('Product was successfully created!');
       navigate('/products');
     } catch (e) {

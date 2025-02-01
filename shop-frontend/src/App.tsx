@@ -2,7 +2,7 @@ import { Container, CssBaseline } from "@mui/material";
 import AppToolbar from './components/UI/AppToolbar/AppToolbar.tsx';
 import { Route, Routes } from 'react-router-dom';
 import Products from './features/products/containers/Products.tsx';
-import NewProduct from './features/products/containers/NewProduct.tsx';
+import NewProduct from './features/admin/NewProduct.tsx';
 import RegisterPage from './features/users/RegisterPage.tsx';
 import LoginPage from './features/users/LoginPage.tsx';
 import SecuredRoute from './components/SecuredRoute/SecuredRoute.tsx';

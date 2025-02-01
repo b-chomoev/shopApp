@@ -1,12 +1,12 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid2';
 import { Button, MenuItem, SelectChangeEvent, TextField } from '@mui/material';
-import { ProductMutation } from '../../../types';
+import { ProductMutation } from '../../types';
 import * as React from 'react';
-import FileInput from '../../../components/FileInput/FileInput.tsx';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import { fetchCategories } from '../../categories/categoriesThunk.ts';
-import { selectCategoriesItems } from '../../categories/categoriesSlice.ts';
+import FileInput from '../../components/FileInput/FileInput.tsx';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import { fetchCategories } from '../categories/categoriesThunk.ts';
+import { selectCategoriesItems } from '../categories/categoriesSlice.ts';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
