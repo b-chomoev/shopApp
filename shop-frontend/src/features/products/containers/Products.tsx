@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { fetchProducts } from '../productsThunk.ts';
 import { selectFetchLoading, selectProductsItems } from '../productsSlice.ts';
 import ProductItem from '../components/ProductItem.tsx';
-import { selectUser } from '../../../users/usersSlice.ts';
+import { selectUser } from '../../users/usersSlice.ts';
 
 const Products = () => {
   const dispatch = useAppDispatch();

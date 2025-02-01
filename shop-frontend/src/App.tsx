@@ -3,11 +3,13 @@ import AppToolbar from './components/UI/AppToolbar/AppToolbar.tsx';
 import { Route, Routes } from 'react-router-dom';
 import Products from './features/products/containers/Products.tsx';
 import NewProduct from './features/products/containers/NewProduct.tsx';
-import RegisterPage from './users/RegisterPage.tsx';
-import LoginPage from './users/LoginPage.tsx';
+import RegisterPage from './features/users/RegisterPage.tsx';
+import LoginPage from './features/users/LoginPage.tsx';
 import SecuredRoute from './components/SecuredRoute/SecuredRoute.tsx';
 import { useAppSelector } from './app/hooks.ts';
-import { selectUser } from './users/usersSlice.ts';
+import { selectUser } from './features/users/usersSlice.ts';
+import AdminLayout from './features/admin/AdminLayout.tsx';
+import AdminProductList from './features/admin/AdminProductList.tsx';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -31,6 +33,14 @@ const App = () => {
                 <NewProduct />
               </SecuredRoute>
             } />
+            <Route path='/admin' element={
+              <SecuredRoute isAllowed={user && user.role === 'admin'}>
+                <AdminLayout />
+              </SecuredRoute>
+            }>
+              <Route path='' element={<AdminProductList />} />
+              <Route path='products' element={<AdminProductList />} />
+            </Route>
             <Route path="*" element={(<h1>Not found</h1>)}/>
           </Routes>
         </Container>
