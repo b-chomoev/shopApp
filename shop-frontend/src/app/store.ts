@@ -1,10 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { productsReducer } from '../features/products/productsSlice.ts';
 import { categoriesReducer } from '../features/categories/categoriesSlice.ts';
 import { usersReducer } from '../features/users/usersSlice.ts';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
+import { productsAdminReducer } from '../features/admin/productsAdminSlice.ts';
+import { productsReducer } from '../features/products/productsSlice.ts';
 
 const userPersistConfig = {
   key: 'store:users',
@@ -13,6 +14,7 @@ const userPersistConfig = {
 };
 
 const rootReducer = combineReducers({
+  adminProducts: productsAdminReducer,
   products: productsReducer,
   categories: categoriesReducer,
   users: persistReducer(userPersistConfig, usersReducer),
