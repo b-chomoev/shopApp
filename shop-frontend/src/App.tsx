@@ -29,11 +29,6 @@ const App = () => {
             <Route path="/login" element={<LoginPage />}/>
             <Route path="/register" element={<RegisterPage />}/>
             <Route path="/products" element={<Products />}/>
-            <Route path="/products/new" element={
-              <SecuredRoute isAllowed={user && user.role === 'admin'}>
-                <NewProduct />
-              </SecuredRoute>
-            } />
             <Route path='/admin' element={
               <SecuredRoute isAllowed={user && user.role === 'admin'}>
                 <AdminLayout />
@@ -42,6 +37,7 @@ const App = () => {
               <Route path='' element={<AdminProductList />} />
               <Route path='products' element={<AdminProductList />} />
               <Route path='categories' element={<AdminCategoriesList />} />
+              <Route path='products/new' element={<NewProduct />} />
             </Route>
             <Route path="*" element={(<h1>Not found</h1>)}/>
           </Routes>

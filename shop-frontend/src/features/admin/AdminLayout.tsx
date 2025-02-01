@@ -4,8 +4,8 @@ import AdminMenu from './AdminMenu.tsx';
 
 const AdminLayout = () => {
   return (
-    <Grid container sx={{width: 200}}>
-      <Grid>
+    <Grid container>
+      <Grid sx={{width: 200}}>
         <AdminMenu />
       </Grid>
 

@@ -1,18 +1,15 @@
 import Grid from '@mui/material/Grid2';
-import { Button, CircularProgress, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { CircularProgress, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import { useEffect } from 'react';
 import { fetchProducts } from '../productsThunk.ts';
 import { selectFetchLoading, selectProductsItems } from '../productsSlice.ts';
 import ProductItem from '../components/ProductItem.tsx';
-import { selectUser } from '../../users/usersSlice.ts';
 
 const Products = () => {
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectProductsItems);
   const isFetchProductsLoading = useAppSelector(selectFetchLoading);
-  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -23,14 +20,6 @@ const Products = () => {
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid>
           <Typography variant="h4">Products</Typography>
-        </Grid>
-
-        <Grid>
-          {user && user.role === 'admin' && (
-            <Button color="primary" component={Link} to="/products/new">
-              Add product
-            </Button>
-          )}
         </Grid>
       </Grid>
 

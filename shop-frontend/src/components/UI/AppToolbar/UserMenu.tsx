@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import { selectUser, unsetUser } from '../../../features/users/usersSlice.ts';
 import { logout } from '../../../features/users/usersThunks.ts';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   user: User;
@@ -11,6 +12,7 @@ interface Props {
 
 const UserMenu: React.FC<Props> = ({user}) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const userAdmin = useAppSelector(selectUser);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -29,11 +31,17 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   return (
     <>
-      <Button color='inherit' onClick={handleClick}>
+      <Button color="inherit" onClick={handleClick}>
         Hello, {user.username}
       </Button>
       <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-        {userAdmin && userAdmin.role === 'admin' && <MenuItem>Admin</MenuItem>}
+        {userAdmin && userAdmin.role === 'admin' && <MenuItem onClick={() => {
+          navigate('/admin');
+          setAnchorEl(null);
+        }}
+        >
+          Admin
+        </MenuItem>}
         <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
       </Menu>
     </>
