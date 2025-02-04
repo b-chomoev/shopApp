@@ -13,6 +13,7 @@ import { selectLoginError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { login } from './usersThunks.ts';
 import Alert from '@mui/material/Alert';
+import { GoogleLogin } from '@react-oauth/google';
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
@@ -61,6 +62,12 @@ const RegisterPage = () => {
             {loginError.error}
           </Alert>
         )}
+
+        <Box sx={{pt: 2}}>
+          <GoogleLogin onSuccess={(credentialResponse => {
+            console.log(credentialResponse);
+          })} onError={() => alert('Login Failed')}/>
+        </Box>
 
         <Box component="form" noValidate onSubmit={submitHandler} sx={{ mt: 3 }}>
           <Grid container direction={'column'} size={12} spacing={2}>
