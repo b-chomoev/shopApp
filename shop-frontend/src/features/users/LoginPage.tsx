@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectLoginError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { login } from './usersThunks.ts';
+import { googleLogin, login } from './usersThunks.ts';
 import Alert from '@mui/material/Alert';
 import { GoogleLogin } from '@react-oauth/google';
 
@@ -40,6 +40,11 @@ const RegisterPage = () => {
     navigate('/');
   };
 
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleLogin(credential)).unwrap();
+    navigate('/');
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -65,7 +70,9 @@ const RegisterPage = () => {
 
         <Box sx={{pt: 2}}>
           <GoogleLogin onSuccess={(credentialResponse => {
-            console.log(credentialResponse);
+            if (credentialResponse.credential) {
+              void googleLoginHandler(credentialResponse.credential);
+            }
           })} onError={() => alert('Login Failed')}/>
         </Box>
 
