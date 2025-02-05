@@ -40,6 +40,12 @@ const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMetho
     token: {
         type: String,
         required: true,
+    },
+    displayName: {
+        type: String,
+    },
+    googleID: {
+        type: String,
     }
 });
 
