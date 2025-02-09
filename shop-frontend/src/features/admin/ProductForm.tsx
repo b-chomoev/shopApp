@@ -1,3 +1,4 @@
+<<<<<<< HEAD:shop-frontend/src/features/admin/ProductForm.tsx
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid2';
 import { Button, MenuItem, SelectChangeEvent, TextField } from '@mui/material';
@@ -11,20 +12,34 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import { Editor } from '@tinymce/tinymce-react';
+=======
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import Grid from "@mui/material/Grid2";
+import { Button, MenuItem, SelectChangeEvent, TextField } from "@mui/material";
+import { ProductMutation } from "../../../types";
+import * as React from "react";
+import FileInput from "../../../components/FileInput/FileInput.tsx";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import { fetchCategories } from "../../categories/categoriesThunk.ts";
+import { selectCategoriesItems } from "../../categories/categoriesSlice.ts";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+>>>>>>> 80e8f09 (Some changes.):shop-frontend/src/features/products/components/ProductForm.tsx
 
 interface Props {
   onSubmit: (product: ProductMutation) => void;
 }
 
 const initialState = {
-  category: '',
-  title: '',
-  price: '',
-  description: '',
+  category: "",
+  title: "",
+  price: "",
+  description: "",
   image: null,
 };
 
-const ProductForm: React.FC<Props> = ({onSubmit}) => {
+const ProductForm: React.FC<Props> = ({ onSubmit }) => {
   const [form, setForm] = useState<ProductMutation>(initialState);
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategoriesItems);
@@ -36,56 +51,62 @@ const ProductForm: React.FC<Props> = ({onSubmit}) => {
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
 
-    onSubmit({...form});
+    onSubmit({ ...form });
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setForm(prevState => ({ ...prevState, [name]: value }));
+    const { name, value } = e.target;
+    setForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
-const selectChangeHandler = (e: SelectChangeEvent) => {
-  const {name, value} = e.target;
-  setForm(prevState => ({ ...prevState, [name]: value}));
-};
+  const selectChangeHandler = (e: SelectChangeEvent) => {
+    const { name, value } = e.target;
+    setForm((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   const fileEventChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, files} = e.target;
+    const { name, files } = e.target;
 
     if (files) {
-      setForm(prevState => ({
+      setForm((prevState) => ({
         ...prevState,
         [name]: files[0] || null,
-      }))
+      }));
     }
-  }
+  };
 
   return (
     <form onSubmit={submitFormHandler}>
       <Grid container direction="column" spacing={2}>
-        {categories.length === 0 ? 'null' :
-          <Grid size={{xs: 12}}>
+        {categories.length === 0 ? (
+          "null"
+        ) : (
+          <Grid size={{ xs: 12 }}>
             <FormControl fullWidth>
               <InputLabel id="category">Category</InputLabel>
               <Select
                 id="category"
-                labelId='category'
+                labelId="category"
                 name="category"
                 required
                 label="Category"
                 value={form?.category}
                 onChange={selectChangeHandler}
               >
-                <MenuItem value='' disabled>Select category</MenuItem>
-                {categories.map(category => (
-                  <MenuItem key={category._id} value={category._id}>{category.title}</MenuItem>
+                <MenuItem value="" disabled>
+                  Select category
+                </MenuItem>
+                {categories.map((category) => (
+                  <MenuItem key={category._id} value={category._id}>
+                    {category.title}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Grid>
-        }
+        )}
 
-        <Grid size={{xs: 12}}>
+        <Grid size={{ xs: 12 }}>
           <TextField
             id="title"
             name="title"
@@ -96,7 +117,7 @@ const selectChangeHandler = (e: SelectChangeEvent) => {
           />
         </Grid>
 
-        <Grid size={{xs: 12}}>
+        <Grid size={{ xs: 12 }}>
           <TextField
             id="price"
             name="price"
@@ -107,6 +128,7 @@ const selectChangeHandler = (e: SelectChangeEvent) => {
           />
         </Grid>
 
+<<<<<<< HEAD:shop-frontend/src/features/admin/ProductForm.tsx
         <Grid size={{xs: 12}}>
           <Editor
             tinymceScriptSrc='/tinymce/tinymce.min.js'
@@ -125,17 +147,31 @@ const selectChangeHandler = (e: SelectChangeEvent) => {
                 'removeformat | help',
               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
+=======
+        <Grid size={{ xs: 12 }}>
+          <TextField
+            multiline
+            id="description"
+            name="description"
+            label="Description"
+>>>>>>> 80e8f09 (Some changes.):shop-frontend/src/features/products/components/ProductForm.tsx
             value={form.description}
             onEditorChange={(content) => setForm({...form, description: content})}
           />
         </Grid>
 
-        <Grid size={{xs: 12}}>
-          <FileInput name='image' label='Image' onGetFile={fileEventChangeHandler}/>
+        <Grid size={{ xs: 12 }}>
+          <FileInput
+            name="image"
+            label="Image"
+            onGetFile={fileEventChangeHandler}
+          />
         </Grid>
 
         <Grid>
-          <Button type="submit" color="primary">Create</Button>
+          <Button type="submit" color="primary">
+            Create
+          </Button>
         </Grid>
       </Grid>
     </form>

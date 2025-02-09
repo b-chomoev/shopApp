@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { RegisterMutation } from '../../types';
 import Avatar from '@mui/material/Avatar';
@@ -14,20 +15,37 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { googleLogin, login } from './usersThunks.ts';
 import Alert from '@mui/material/Alert';
 import { GoogleLogin } from '@react-oauth/google';
+=======
+import React, { useState } from "react";
+import { RegisterMutation } from "../../types";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid2";
+import Box from "@mui/material/Box";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { selectLoginError } from "./usersSlice.ts";
+import { NavLink, useNavigate } from "react-router-dom";
+import { login } from "./usersThunks.ts";
+import Alert from "@mui/material/Alert";
+>>>>>>> 80e8f09 (Some changes.)
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const loginError = useAppSelector(selectLoginError);
   const navigate = useNavigate();
   const [form, setForm] = useState<RegisterMutation>({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
 
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -37,7 +55,7 @@ const RegisterPage = () => {
     e.preventDefault();
 
     await dispatch(login(form)).unwrap();
-    navigate('/');
+    navigate("/");
   };
 
   const googleLoginHandler = async (credential: string) => {
@@ -50,12 +68,12 @@ const RegisterPage = () => {
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOpenIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -63,11 +81,12 @@ const RegisterPage = () => {
         </Typography>
 
         {loginError && (
-          <Alert severity="error" sx={{mt: 3, width: '100%'}}>
+          <Alert severity="error" sx={{ mt: 3, width: "100%" }}>
             {loginError.error}
           </Alert>
         )}
 
+<<<<<<< HEAD
         <Box sx={{pt: 2}}>
           <GoogleLogin onSuccess={(credentialResponse => {
             if (credentialResponse.credential) {
@@ -78,6 +97,15 @@ const RegisterPage = () => {
 
         <Box component="form" noValidate onSubmit={submitHandler} sx={{ mt: 3 }}>
           <Grid container direction={'column'} size={12} spacing={2}>
+=======
+        <Box
+          component="form"
+          noValidate
+          onSubmit={submitHandler}
+          sx={{ mt: 3 }}
+        >
+          <Grid container direction={"column"} size={12} spacing={2}>
+>>>>>>> 80e8f09 (Some changes.)
             <Grid size={12}>
               <TextField
                 fullWidth
@@ -110,7 +138,7 @@ const RegisterPage = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid size={12}>
-              <NavLink to={'/register'}>
+              <NavLink to={"/register"}>
                 Doesn't have an account yet? Sign up
               </NavLink>
             </Grid>

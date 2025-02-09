@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import { GlobalError, User, ValidationError } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store.ts';
 import { googleLogin, login, register } from './usersThunks.ts';
+=======
+import { GlobalError, User, ValidationError } from "../../types";
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store.ts";
+import { login, register } from "./usersThunks.ts";
+>>>>>>> 80e8f09 (Some changes.)
 
 interface UsersState {
   user: User | null;
@@ -20,14 +27,17 @@ const initialState: UsersState = {
 };
 
 export const selectUser = (state: RootState) => state.users.user;
-export const selectRegisterLoading = (state: RootState) => state.users.registerLoading;
-export const selectRegisterError = (state: RootState) => state.users.registerError;
+export const selectRegisterLoading = (state: RootState) =>
+  state.users.registerLoading;
+export const selectRegisterError = (state: RootState) =>
+  state.users.registerError;
 
 export const selectLoginError = (state: RootState) => state.users.loginError;
-export const selectLoginLoading = (state: RootState) => state.users.loginLoading;
+export const selectLoginLoading = (state: RootState) =>
+  state.users.loginLoading;
 
 export const usersSlice = createSlice({
-  name: 'users',
+  name: "users",
   initialState,
   reducers: {
     unsetUser: (state) => {
@@ -40,11 +50,11 @@ export const usersSlice = createSlice({
         state.registerLoading = true;
         state.registerError = null;
       })
-      .addCase(register.fulfilled, (state, {payload: registerResponse}) => {
+      .addCase(register.fulfilled, (state, { payload: registerResponse }) => {
         state.registerLoading = false;
         state.user = registerResponse.user;
       })
-      .addCase(register.rejected, (state, {payload: error}) => {
+      .addCase(register.rejected, (state, { payload: error }) => {
         state.registerLoading = false;
         state.registerError = error || null;
       })
@@ -53,11 +63,11 @@ export const usersSlice = createSlice({
         state.loginLoading = true;
         state.loginError = null;
       })
-      .addCase(login.fulfilled, (state, {payload: user}) => {
+      .addCase(login.fulfilled, (state, { payload: user }) => {
         state.loginLoading = false;
         state.user = user;
       })
-      .addCase(login.rejected, (state, {payload: error}) => {
+      .addCase(login.rejected, (state, { payload: error }) => {
         state.loginLoading = false;
         state.loginError = error || null;
       })
@@ -74,7 +84,7 @@ export const usersSlice = createSlice({
         state.loginLoading = false;
         state.loginError = error || null;
       });
-  }
+  },
 });
 
 export const usersReducer = usersSlice.reducer;

@@ -1,7 +1,7 @@
-import Grid from '@mui/material/Grid2';
-import { Button, TextField } from '@mui/material';
-import { useRef, useState } from 'react';
-import * as React from 'react';
+import Grid from "@mui/material/Grid2";
+import { Button, TextField } from "@mui/material";
+import { useRef, useState } from "react";
+import * as React from "react";
 
 interface Props {
   name: string;
@@ -9,15 +9,15 @@ interface Props {
   onGetFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FileInput: React.FC<Props> = ({name, label, onGetFile}) => {
+const FileInput: React.FC<Props> = ({ name, label, onGetFile }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [fileName, setFileName] = useState('');
+  const [fileName, setFileName] = useState("");
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFileName(e.target.files[0].name)
+      setFileName(e.target.files[0].name);
     } else {
-      setFileName('');
+      setFileName("");
     }
 
     onGetFile(e);
@@ -32,14 +32,13 @@ const FileInput: React.FC<Props> = ({name, label, onGetFile}) => {
   return (
     <>
       <input
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         type="file"
         name={name}
         onChange={onFileChange}
         ref={inputRef}
-
       />
-      <Grid container spacing={2} direction='row' alignItems='center'>
+      <Grid container spacing={2} direction="row" alignItems="center">
         <Grid>
           <TextField
             disabled
@@ -49,7 +48,9 @@ const FileInput: React.FC<Props> = ({name, label, onGetFile}) => {
           />
         </Grid>
         <Grid>
-          <Button variant='contained' onClick={activateInput}>Browse</Button>
+          <Button variant="contained" onClick={activateInput}>
+            Browse
+          </Button>
         </Grid>
       </Grid>
     </>

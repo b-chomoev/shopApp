@@ -1,15 +1,24 @@
+<<<<<<< HEAD
 import { AppBar, styled, Toolbar, Typography } from '@mui/material';
 import { Link as NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../../app/hooks';
 import { selectUser } from '../../../features/users/usersSlice.ts';
 import AnonymousMenu from './AnonymousMenu.tsx';
 import UserMenu from './UserMenu.tsx';
+=======
+import { AppBar, styled, Toolbar, Typography } from "@mui/material";
+import { Link as NavLink } from "react-router-dom";
+import { useAppSelector } from "../../../app/hooks";
+import { selectUser } from "../../../features/users/usersSlice.ts";
+import AnonymousMenu from "./AnonymousMenu.tsx";
+import UserMenu from "./UserMenu.tsx";
+>>>>>>> 80e8f09 (Some changes.)
 
 const Link = styled(NavLink)({
-  color: 'inherit',
-  textDecoration: 'none',
-  '&:hover': {
-    color: 'inherit'
+  color: "inherit",
+  textDecoration: "none",
+  "&:hover": {
+    color: "inherit",
   },
 });
 
@@ -17,21 +26,21 @@ const AppToolbar = () => {
   const user = useAppSelector(selectUser);
 
   return (
-    <AppBar position="sticky" sx={{mb: 2}}>
+    <AppBar position="sticky" sx={{ mb: 2 }}>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           <Link to="/">CompStore</Link>
         </Typography>
 
-          {user ?
-            <>
-              <UserMenu user={user}/>
-            </>
-            :
-            <>
-              <AnonymousMenu/>
-            </>
-          }
+        {user ? (
+          <>
+            <UserMenu user={user} />
+          </>
+        ) : (
+          <>
+            <AnonymousMenu />
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );

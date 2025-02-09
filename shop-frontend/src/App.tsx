@@ -1,4 +1,5 @@
 import { Container, CssBaseline } from "@mui/material";
+<<<<<<< HEAD
 import AppToolbar from './components/UI/AppToolbar/AppToolbar.tsx';
 import { Route, Routes } from 'react-router-dom';
 import Products from './features/products/containers/Products.tsx';
@@ -11,6 +12,14 @@ import { selectUser } from './features/users/usersSlice.ts';
 import AdminLayout from './features/admin/AdminLayout.tsx';
 import AdminProductList from './features/admin/AdminProductList.tsx';
 import AdminCategoriesList from './features/admin/AdminCategoriesList.tsx';
+=======
+import AppToolbar from "./components/UI/AppToolbar/AppToolbar";
+import { Route, Routes } from "react-router-dom";
+import Products from "./features/products/containers/Products";
+import NewProduct from "./features/products/containers/NewProduct";
+import RegisterPage from "./features/users/RegisterPage";
+import LoginPage from "./features/users/LoginPage";
+>>>>>>> 80e8f09 (Some changes.)
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -25,6 +34,7 @@ const App = () => {
       <main>
         <Container maxWidth="xl">
           <Routes>
+<<<<<<< HEAD
             <Route path="/" element={<Products />}/>
             <Route path="/login" element={<LoginPage />}/>
             <Route path="/register" element={<RegisterPage />}/>
@@ -40,6 +50,14 @@ const App = () => {
               <Route path='products/new' element={<NewProduct />} />
             </Route>
             <Route path="*" element={(<h1>Not found</h1>)}/>
+=======
+            <Route path="/" element={<Products />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/new" element={<NewProduct />} />
+            <Route path="*" element={<h1>Not found</h1>} />
+>>>>>>> 80e8f09 (Some changes.)
           </Routes>
         </Container>
       </main>

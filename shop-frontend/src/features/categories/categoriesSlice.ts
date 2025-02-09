@@ -1,7 +1,7 @@
-import { Category } from '../../types';
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchCategories } from './categoriesThunk.ts';
-import { RootState } from '../../app/store.ts';
+import { Category } from "../../types";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchCategories } from "./categoriesThunk.ts";
+import { RootState } from "../../app/store.ts";
 
 interface ICategoriesState {
   items: Category[];
@@ -13,11 +13,13 @@ const initialState: ICategoriesState = {
   fetchLoading: false,
 };
 
-export const selectCategoriesItems = (state: RootState) => state.categories.items;
-export const selectFetchLoading = (state: RootState) => state.categories.fetchLoading;
+export const selectCategoriesItems = (state: RootState) =>
+  state.categories.items;
+export const selectFetchLoading = (state: RootState) =>
+  state.categories.fetchLoading;
 
 export const categoriesSlice = createSlice({
-  name: 'categories',
+  name: "categories",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -25,14 +27,14 @@ export const categoriesSlice = createSlice({
       .addCase(fetchCategories.pending, (state) => {
         state.fetchLoading = true;
       })
-      .addCase(fetchCategories.fulfilled, (state, {payload: products}) => {
+      .addCase(fetchCategories.fulfilled, (state, { payload: products }) => {
         state.fetchLoading = false;
         state.items = products;
       })
       .addCase(fetchCategories.rejected, (state) => {
         state.fetchLoading = false;
-      })
-  }
+      });
+  },
 });
 
 export const categoriesReducer = categoriesSlice.reducer;
