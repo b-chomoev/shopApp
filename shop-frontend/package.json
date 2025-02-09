@@ -8,12 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-<<<<<<< HEAD
-    "postinstall": "node ./postinstall.js"
-=======
+    "postinstall": "node ./postinstall.js",
     "format:check": "npx prettier . --check",
     "format": "npx prettier . --write"
->>>>>>> 80e8f09 (Some changes.)
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -1,7 +1,7 @@
 import { Product } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { createAdminProduct, fetchAdminProducts } from './productsAdminThunk.ts';
-import { RootState } from '../../app/store.ts';
+import { createAdminProduct, fetchAdminProducts } from './productsAdminThunk';
+import { RootState } from '../../app/store';
 
 interface IAdminProductsState {
   items: Product[];

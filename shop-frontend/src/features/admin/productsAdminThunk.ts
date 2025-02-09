@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosApi from '../../axiosApi.ts';
+import axiosApi from '../../axiosApi';
 import { Product, ProductMutation } from '../../types';
 
 export const fetchAdminProducts = createAsyncThunk<Product[], void>(

@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import { Outlet } from 'react-router-dom';
-import AdminMenu from './AdminMenu.tsx';
+import AdminMenu from './AdminMenu';
 
 const AdminLayout = () => {
   return (

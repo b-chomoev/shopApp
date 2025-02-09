@@ -1,11 +1,11 @@
 import { Button, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid2';
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectUser } from '../users/usersSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectUser } from '../users/usersSlice';
 import { useEffect } from 'react';
-import { fetchAdminProducts } from './productsAdminThunk.ts';
-import { selectAdminProductsItems } from './productsAdminSlice.ts';
+import { fetchAdminProducts } from './productsAdminThunk';
+import { selectAdminProductsItems } from './productsAdminSlice';
 import { Product } from '../../types';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import ClearIcon from '@mui/icons-material/Clear';
