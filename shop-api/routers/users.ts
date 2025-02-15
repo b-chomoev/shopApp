@@ -2,7 +2,6 @@ import express from "express";
 import {Error} from "mongoose";
 import User from "../models/User";
 import auth, {RequestWithUser} from "../middleware/auth";
-import user from "../models/User";
 import {OAuth2Client} from "google-auth-library";
 import config from "../config";
 
