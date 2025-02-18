@@ -16,12 +16,16 @@ import { register } from './usersThunks';
 const initialForm: RegisterMutation = {
   username: '',
   password: '',
+  email: '',
 };
+
+const regEmail = /^(\w+[-.]?\w+)@(\w+)+([.-]?\w+)?(\.[a-zA-Z]{2,3})$/;
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const registerError = useAppSelector(selectRegisterError);
   const navigate = useNavigate();
+  const [error, setError] = useState<{ email?: string }>({});
   const [form, setForm] = useState<RegisterMutation>(initialForm);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +35,14 @@ const RegisterPage = () => {
       ...prev,
       [name]: value,
     }));
+
+    if (name === 'email') {
+      if (regEmail.test(value)) {
+        setError(prevState => ({...prevState, 'email': ''}));
+      } else {
+        setError(prevState => ({...prevState, 'email': 'Invalid email format'}));
+      }
+    }
   };
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -82,6 +94,20 @@ const RegisterPage = () => {
                     helperText={getFieldError('username')}
                 />
               </Grid>
+
+              <Grid size={12}>
+                <TextField
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  value={form.email}
+                  onChange={inputChangeHandler}
+                  error={Boolean(getFieldError('email')) || Boolean(error.email)}
+                  helperText={getFieldError('email') || error.email}
+                />
+              </Grid>
+
               <Grid size={12}>
                 <TextField
                     fullWidth

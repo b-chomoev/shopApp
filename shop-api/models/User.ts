@@ -12,6 +12,7 @@ type UserModel = Model<UserFields, {}, UserMethods>
 
 const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
+const regEmail = /^(\w+[-.]?\w+)@(\w+)+([.-]?\w+)?(\.[a-zA-Z]{2,3})$/;
 
 const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMethods>({
     username: {
@@ -25,6 +26,17 @@ const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMetho
                 return !user;
             },
             message: "This username is already taken",
+        }
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        validate: {
+            validator: async function (this: HydratedDocument<UserFields>, value: string): Promise<boolean> {
+                return regEmail.test(value);
+            },
+            message: "Invalid email format",
         }
     },
     password: {

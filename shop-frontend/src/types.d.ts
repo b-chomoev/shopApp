@@ -24,6 +24,7 @@ export interface Category {
 export interface RegisterMutation {
   username: string;
   password: string;
+  email: string;
 }
 
 export interface LoginMutation {

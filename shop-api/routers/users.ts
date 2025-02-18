@@ -54,6 +54,7 @@ userRouter.post('/register', async (req, res, next) => {
     try {
         const user = new User({
             username: req.body.username,
+            email: req.body.email,
             password: req.body.password,
         });
 
