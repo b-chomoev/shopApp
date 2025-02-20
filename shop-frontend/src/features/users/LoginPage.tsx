@@ -22,6 +22,7 @@ const RegisterPage = () => {
     const [form, setForm] = useState<RegisterMutation>({
         username: '',
         password: '',
+        email: '',
     });
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
