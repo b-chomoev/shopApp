@@ -14,7 +14,6 @@ export const createAdminProduct = createAsyncThunk<void, ProductMutation>(
   'admin/products/createAdminProduct',
   async (productMutation) => {
     const formData = new FormData();
-
     const keys = Object.keys(productMutation) as (keyof ProductMutation)[]; // [title, price]
 
     keys.forEach((key) => {

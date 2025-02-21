@@ -11,53 +11,85 @@ interface UserMethods {
 type UserModel = Model<UserFields, {}, UserMethods>
 
 const Schema = mongoose.Schema;
-const SALT_WORK_FACTOR = 10;
-const regEmail = /^(\w+[-.]?\w+)@(\w+)+([.-]?\w+)?(\.[a-zA-Z]{2,3})$/;
 
-const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMethods>({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        validate: {
-            validator: async function (this: HydratedDocument<UserFields>,value: string): Promise<boolean> {
-                if (!this.isModified('username')) return true;
-                const user: UserFields | null = await User.findOne({username: value});
-                return !user;
-            },
-            message: "This username is already taken",
-        }
+const SALT_WORK_FACTOR = 10;
+
+interface UserVirtuals {
+    confirmPassword: string;
+}
+
+const regEmail = /^(\w+[-.]?\w+)@(\w+)([.-]?\w+)?(\.[a-zA-Z]{2,3})$/;
+
+const UserSchema = new Schema<
+    HydratedDocument<UserFields>,
+    UserModel,
+    UserMethods,
+    {},
+    UserVirtuals
+>({
+        username: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            validate: [
+                {
+                    validator: async function (this: HydratedDocument<UserFields>, value: string): Promise<boolean> {
+                        if (!this.isModified('email')) return true;
+                        const user: UserFields | null = await User.findOne({email: value});
+                        return !user;
+                    },
+                    message: "This email is already taken",
+                },
+                {
+                    validator: async function (this: HydratedDocument<UserFields>, value: string): Promise<boolean> {
+                        if (!this.isModified('email')) return true;
+                        return regEmail.test(value);
+                    },
+                    message: "Invalid email format",
+                }
+            ]
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        role: {
+            type: String,
+            required: true,
+            default: 'user',
+            enum: ['user', 'admin'],
+        },
+        token: {
+            type: String,
+            required: true,
+        },
+        displayName: String,
+        googleID: String,
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        validate: {
-            validator: async function (this: HydratedDocument<UserFields>, value: string): Promise<boolean> {
-                return regEmail.test(value);
-            },
-            message: "Invalid email format",
-        }
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    role: {
-        type: String,
-        required: true,
-        enum: ['user', 'admin'],
-        default: 'user',
-    },
-    token: {
-        type: String,
-        required: true,
-    },
-    displayName: {
-        type: String,
-    },
-    googleID: {
-        type: String,
+    {
+        virtuals: {
+            confirmPassword: {
+                get() {
+                    return this.__confirmPassword
+                },
+                set(confirmPassword: string) {
+                    this.__confirmPassword = confirmPassword;
+                }
+            }
+        },
+    }
+);
+
+UserSchema.path("password").validate(function (value) {
+    if (!this.isModified('password')) return;
+
+    if (value !== this.confirmPassword) {
+        this.invalidate('password', 'Passwords do not match');
+        this.invalidate('confirmPassword', 'Passwords do not match');
     }
 });
 
@@ -65,6 +97,7 @@ UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+    console.log(salt);
     const hash = await bcrypt.hash(this.password, salt);
 
     this.password = hash;

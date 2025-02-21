@@ -1,17 +1,21 @@
 import {NextFunction, Request, Response} from "express";
 import {RequestWithUser} from "./auth";
 
-const permit = (...roles: string[]) => {
-    return (expressRequest: Request, res: Response, next: NextFunction) => {
-        const request = expressRequest as RequestWithUser;
+// permit ('admin', 'user');
 
-        if (!request.user) {
-            res.status(401).send({error: 'Unauthenticated'});
+// ...roles = ['admin', 'user']
+
+const permit = (...roles: string[]) => {
+    return (expressReq: Request, res: Response, next: NextFunction) => {
+        const req = expressReq as RequestWithUser;
+
+        if (!req.user) {
+            res.status(401).send({message: 'Unauthentication'});
             return;
         }
 
-        if (!roles.includes(request.user.role)) {
-            res.status(403).send({error: 'Unauthorized'});
+        if (!roles.includes(req.user.role)) {
+            res.status(403).send({message: 'Unathorized'});
             return;
         }
 

@@ -14,42 +14,55 @@ const run = async () => {
         await db.dropCollection('products');
         await db.dropCollection('users');
     } catch (e) {
-        console.log('Collections were not present');
+        console.log('Collections were not presents, skipping drop ');
     }
 
-    const [cpuCategory, SSDCategory] = await Category.create({
-        title: 'CPU',
-        description: 'Test desc for CPU',
-    }, {
-        title: 'SSD',
-        description: 'Test desc for SSD ...',
-    });
+    const [cpuCategory, SSDCategory] = await Category.create(
+        {
+            title: 'CPU',
+            description: 'Test desc for CPU'
+        },
+        {
+            title: 'SSD',
+            description: 'Test desc for SSD ...'
+        });
 
     await Product.create({
-        category: cpuCategory._id,
-        title: 'Intel',
-        price: 350,
-        image: 'fixtures/cpu.png',
-    } , {
-        category: SSDCategory._id,
-        title: 'Lenovo',
-        price: 500,
-        image: 'fixtures/ssd.png',
-    });
+            category: cpuCategory._id,
+            title: 'Intel',
+            price: 350,
+            image: "fixtures/cpu.jpg",
+        },
+        {
+            category: cpuCategory._id,
+            title: 'Apple',
+            price: 700,
+        },
+        {
+            category: SSDCategory._id,
+            title: 'Lenovo',
+            price: 500,
+            image: "fixtures/ssd.jpg",
+        });
 
     await User.create({
-        username: 'John',
-        password: '123',
-        token: randomUUID(),
-        role: 'user',
-    }, {
-        username: 'Jane',
-        password: '123',
-        token: randomUUID(),
-        role: 'admin',
-    });
+            email: "jane@gmail.com",
+            username: "Jane",
+            password: "123",
+            confirmPassword: "123",
+            token: randomUUID(),
+            role: 'admin'
+        },
+        {
+            email: "john@gmail.com",
+            username: "John",
+            password: "123",
+            confirmPassword: "123",
+            token: randomUUID(),
+            role: 'user',
+        });
 
     await db.close();
 };
 
-run().catch(err => console.log(err));
+run().catch(console.error);

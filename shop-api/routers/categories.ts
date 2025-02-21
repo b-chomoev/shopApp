@@ -1,7 +1,8 @@
 import express from "express";
+
 import Category from "../models/Category";
-import auth from "../middleware/auth";
 import permit from "../middleware/permit";
+import auth from "../middleware/auth";
 
 const categoriesRouter = express.Router();
 
@@ -15,11 +16,13 @@ categoriesRouter.get('/', async (req, res, next) => {
 });
 
 categoriesRouter.post('/', auth, permit('admin'), async (req, res, next) => {
+    const categoryData = {
+        title: req.body.title,
+        description: req.body.description,
+    };
+
     try {
-        const category = new Category({
-            title: req.body.title,
-            description: req.body.description,
-        });
+        const category = new Category(categoryData);
         await category.save();
         res.send(category);
     } catch (e) {

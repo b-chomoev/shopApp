@@ -1,3 +1,4 @@
+
 import express from "express";
 import productsRouter from "./routers/products";
 import cors from "cors";
@@ -29,7 +30,7 @@ const run = async () => {
 
     process.on('exit', () => {
         mongoDb.disconnect();
-    })
+    });
 };
 
 run().catch(err => console.log(err));

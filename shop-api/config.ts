@@ -1,8 +1,9 @@
 import path from "path";
 
-const rootPath = __dirname;
 
-const config = {
+const rootPath  = __dirname;
+
+const config =  {
     rootPath,
     publicPath: path.join(rootPath, 'public'),
     google: {
@@ -10,6 +11,7 @@ const config = {
         secretId: process.env.GOOGLE_SECRET_ID,
     },
     db: 'mongodb://localhost/shop',
-}
+};
+
 
 export default config;

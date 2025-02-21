@@ -5,12 +5,12 @@ export interface Product {
     price: number;
     description: string;
     image: string | null;
-    created_at: string;
+    create_at: string;
 }
 
-export type ProductWithoutId = Omit<Product,  'id', 'create_at'>
+export type ProductWithoutId = Omit<Product, 'id', 'create_at'>
 
-export interface Category {
+export interface  Category {
     _id: string;
     title: string;
     description: string;
@@ -24,4 +24,6 @@ export interface UserFields {
     role: string;
     displayName: string;
     googleID: string;
+    facebookID: string;
+    __confirmPassword: string;
 }
