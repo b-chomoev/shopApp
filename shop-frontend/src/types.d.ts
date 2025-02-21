@@ -15,20 +15,28 @@ export interface ProductMutation {
   image: File | null;
 }
 
+export interface CocktailMutation {
+  title: string;
+  description: string;
+  ingredients: string;
+  image: File | null;
+}
+
 export interface Category {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
 }
 
 export interface RegisterMutation {
   username: string;
-  password: string;
   email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export interface LoginMutation {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -46,7 +54,7 @@ export interface RegisterResponse {
 
 export interface ValidationError {
   errors: {
-    [key: string]: {
+    [key: string]:{
       name: string;
       message: string;
     }
